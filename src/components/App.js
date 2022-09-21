@@ -1,5 +1,7 @@
+import Navbar from "./Navbar";
+
 function App() {
-  return <div>E-commerce</div>;
+  return <Navbar />;
 }
 
 export default App;
