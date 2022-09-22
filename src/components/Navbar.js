@@ -1,19 +1,37 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 export default function Navbar() {
   return (
     <Nav>
-      <Title>eCommerce</Title>
-      <NavOption>Products</NavOption>
+      <StyledLink
+        to="/"
+        style={{ textDecoration: "none", display: "inline-block" }}
+      >
+        <Title>eCommerce</Title>
+      </StyledLink>
       <NavOption>
-        Add a Product{" "}
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/4315/4315609.png"
-          width="15px"
-          height="15px"
-          alt="add-img"
-        />
+        <StyledLink to="/products">Products</StyledLink>
       </NavOption>
+      <NavOption>
+        <StyledLink to="/addProduct">
+          Add a Product{" "}
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/4315/4315609.png"
+            width="15px"
+            height="15px"
+            alt="add-img"
+          />
+        </StyledLink>
+      </NavOption>
+      <Cart>
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/679/679701.png"
+          width="25px"
+          alt="cart-img"
+        />
+        <CartCounter>0</CartCounter>
+      </Cart>
       <Userlogo>
         <UserName>John Doe</UserName>
         <UserDp>
@@ -66,4 +84,27 @@ const UserDp = styled.div`
   border: 1px solid grey;
   border-radius: 25%;
   background-color: lightgrey;
+  @media (max-width: 560px) {
+    display: none;
+  }
+`;
+const Cart = styled.div`
+  display: inline-block;
+  padding: 20px;
+  padding-left-0px
+`;
+const CartCounter = styled.div`
+  display: inline;
+  position: absolute;
+  margin-top: -15px;
+  background-color: red;
+  border: 1px solid white;
+  border-radius: 50%;
+  font-size: 10px;
+  padding: 2px;
+  color: white;
+`;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  margin-top: 15px;
 `;
