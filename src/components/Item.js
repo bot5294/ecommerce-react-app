@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-// import { connect } from "react-redux";
-
+import { add2Cart } from "../actions/cart";
+import { connect } from "react-redux";
+import { createNotification } from "../utils/Notification";
 export const Item = (props) => {
   const fstar = "https://cdn-icons-png.flaticon.com/512/477/477406.png";
   const estar = "https://cdn-icons-png.flaticon.com/512/1828/1828961.png";
   let item = props.item;
+  console.log("item.js : ", props);
   const genRatings = (count) => {
     let i = 1;
     let arr = [];
@@ -18,6 +20,11 @@ export const Item = (props) => {
       i++;
     }
     return arr;
+  };
+  const handleAdd2Cart = (item) => {
+    props
+      .addItem2Cart(item)
+      .then(() => createNotification("success", "Added To Cart"));
   };
   return (
     <>
@@ -36,7 +43,9 @@ export const Item = (props) => {
                 <Star src={star} key={index} />
               ))}
             </div>
-            <Add2CartBtn>Add to cart</Add2CartBtn>
+            <Add2CartBtn onClick={() => handleAdd2Cart(item)}>
+              Add to cart
+            </Add2CartBtn>
           </Dflex>
         </ItemInfo>
         <ItemDetail>
@@ -89,8 +98,10 @@ const Add2CartBtn = styled.button`
   border: none;
   padding: 8px;
 `;
-// const mapStateToProps = (state) => ({});
+const mapStateToProps = () => ({});
 
-// const mapDispatchToProps = {};
+const mapDispatchToProps = (dispatch) => ({
+  addItem2Cart: (item) => dispatch(add2Cart(item)),
+});
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Item);
+export default connect(mapStateToProps, mapDispatchToProps)(Item);

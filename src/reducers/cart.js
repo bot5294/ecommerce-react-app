@@ -14,7 +14,7 @@ export default function cart(state = cartInitialState, action) {
     case ADD_2_CART:
       return {
         state: {
-          items: state.items.concat(action.item),
+          items: state.cart.items.concat(action.item),
           count: state.count + 1,
         },
       };

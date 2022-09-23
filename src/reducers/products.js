@@ -8,31 +8,20 @@ const productsInitialState = {
 export default function products(state = productsInitialState, action) {
   switch (action.type) {
     case ADD_PRODUCTS:
-      console.log("reducers action :", action.items);
-      console.log("reducers state :", state);
+      // console.log("reducers action :", action.items);
+      // console.log("reducers state :", state);
       return {
-        state: {
-          items: action.items,
-        },
+        items: action.items,
       };
     case SORT_BY_PRICE:
-      let items = state.state.items;
-      // console.log("p reducer items.length = ", state);
-      // let priceProducts = new Array(items.length);
-      // for (let i = 0; i < priceProducts.length; i++) {
-      //   priceProducts[i] = items[i].price;
-      // }
-      // priceProducts.sort((x, y) => x - y);
-
-      // for (let i = 0; i < priceProducts.length; i++) {
-      //   console.log(priceProducts[i]);
-      // }
+      console.log("sort-by-price : ", state);
+      let items = { state: state };
+      items = state.items;
       items = items.sort((a, b) => a.price - b.price);
+      console.log("sbp items :", items);
       console.log(items);
       return {
-        state: {
-          items: items,
-        },
+        items: items,
       };
 
     default:
