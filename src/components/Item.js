@@ -7,7 +7,6 @@ export const Item = (props) => {
   const fstar = "https://cdn-icons-png.flaticon.com/512/477/477406.png";
   const estar = "https://cdn-icons-png.flaticon.com/512/1828/1828961.png";
   let item = props.item;
-  console.log("item.js : ", props);
   const genRatings = (count) => {
     let i = 1;
     let arr = [];
@@ -22,9 +21,8 @@ export const Item = (props) => {
     return arr;
   };
   const handleAdd2Cart = (item) => {
-    props
-      .addItem2Cart(item)
-      .then(() => createNotification("success", "Added To Cart"));
+    props.addItem2Cart(item);
+    createNotification("success", "Added To Cart");
   };
   return (
     <>
@@ -98,10 +96,10 @@ const Add2CartBtn = styled.button`
   border: none;
   padding: 8px;
 `;
-const mapStateToProps = () => ({});
+// const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
   addItem2Cart: (item) => dispatch(add2Cart(item)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Item);
+export default connect(null, mapDispatchToProps)(Item);

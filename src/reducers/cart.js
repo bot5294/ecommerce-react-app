@@ -13,10 +13,8 @@ export default function cart(state = cartInitialState, action) {
   switch (action.type) {
     case ADD_2_CART:
       return {
-        state: {
-          items: state.cart.items.concat(action.item),
-          count: state.count + 1,
-        },
+        items: [...state.items, action.item],
+        count: state.count + 1,
       };
     case REMOVE_FROM_CART:
       let nState = state.items;

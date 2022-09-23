@@ -8,8 +8,6 @@ const productsInitialState = {
 export default function products(state = productsInitialState, action) {
   switch (action.type) {
     case ADD_PRODUCTS:
-      // console.log("reducers action :", action.items);
-      // console.log("reducers state :", state);
       return {
         items: action.items,
       };
