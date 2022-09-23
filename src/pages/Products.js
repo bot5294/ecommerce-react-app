@@ -3,11 +3,15 @@ import { Item } from "../components/Item";
 import styled from "styled-components";
 import { connect } from "react-redux";
 // import { bindActionCreators } from "redux";
-import { addProducts } from "../actions/products";
+import store from "../store";
+import { addProducts, sortProducts } from "../actions/products";
 import { API_URLS } from "../utils";
+import { v4 as uuidv4 } from "uuid";
 export function Products(props) {
   console.log("props.products = ", props);
-  let items = props.data;
+  let items = store.getState().products.state.items || props.data;
+  console.log("items = ", items);
+  let isSortedClicked = false;
   useEffect(() => {
     fetch(API_URLS.products())
       .then((res) => res.json())
@@ -18,15 +22,18 @@ export function Products(props) {
       });
   }, []);
   const handleSortByPrice = () => {
-    items = items.sort();
-    console.log(items);
+    let x = props.sortByPrice();
+    x = store.getState().products.state.items;
+    console.log("handleSortByPrice : ", x);
+    items = x;
   };
   return (
     <div>
       <SortBtn onClick={handleSortByPrice}>Sort By Price</SortBtn>
       {items &&
-        items.map((item, index) => {
-          return <Item item={item} key={index} />;
+        items.map((item) => {
+          console.log("items = ", item);
+          return <Item item={item} key={uuidv4()} />;
         })}
     </div>
   );
@@ -43,12 +50,13 @@ const SortBtn = styled.div`
 
 function mapStateToProps(state) {
   console.log("inside products : ", state);
-  const { items } = state.products.state;
+  const { items } = state.products.state || "";
   return { data: items };
 }
 
 const mapDispatchToProps = (dispatch) => ({
   sendDataToStore: (data) => dispatch(addProducts(data)),
+  sortByPrice: () => dispatch(sortProducts()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Products);
