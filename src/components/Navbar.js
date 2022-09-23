@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-export default function Navbar() {
+import { connect } from "react-redux";
+export function Navbar(props) {
   return (
     <Nav>
       <StyledLink
@@ -30,7 +31,7 @@ export default function Navbar() {
           width="25px"
           alt="cart-img"
         />
-        <CartCounter>0</CartCounter>
+        <CartCounter>{props.count}</CartCounter>
       </Cart>
       <Userlogo>
         <UserName>John Doe</UserName>
@@ -108,3 +109,11 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   margin-top: 15px;
 `;
+
+function mapStateToProps(state) {
+  return { count: state.cart.count };
+}
+
+// const mapDispatchToProps = {};
+
+export default connect(mapStateToProps)(Navbar);

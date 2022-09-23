@@ -1,17 +1,21 @@
 import { React, useEffect } from "react";
 import { Item } from "../components/Item";
 import styled from "styled-components";
-// import { db } from "../firebase";
+import { connect } from "react-redux";
+// import { bindActionCreators } from "redux";
+import { addProducts } from "../actions/products";
 import { API_URLS } from "../utils";
 let items = [];
-export function Products() {
+export function Products(props) {
   useEffect(() => {
     fetch(API_URLS.products())
       .then((res) => res.json())
       .then((data) => {
         items = data;
+        console.log("sendDataTo ", props);
+        props.sendDataToStore(data);
       });
-  }, []);
+  }, [items]);
   const handleSortByPrice = () => {
     items = items.sort();
     console.log(items);
@@ -21,7 +25,6 @@ export function Products() {
       <SortBtn onClick={handleSortByPrice}>Sort By Price</SortBtn>
       {items &&
         items.map((item, index) => {
-          console.log("item = ", item);
           return <Item item={item} key={index} />;
         })}
     </div>
@@ -36,3 +39,14 @@ const SortBtn = styled.div`
   background-color: white;
   cursor: default;
 `;
+
+function mapStateToProps(state) {
+  console.log("inside products : ", state);
+  return { count: state.cart };
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  sendDataToStore: (data) => dispatch(addProducts(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Products);

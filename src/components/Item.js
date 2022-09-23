@@ -9,12 +9,10 @@ export const Item = (props) => {
   const genRatings = (count) => {
     let i = 1;
     let arr = [];
-    console.log(count);
     while (i <= count) {
       arr.push(fstar);
       i++;
     }
-    console.log(arr);
     while (i <= 5) {
       arr.push(estar);
       i++;
@@ -34,10 +32,11 @@ export const Item = (props) => {
               <small>Rs.{item.price}</small>
             </div>
             <div>
-              {genRatings(item.rating).map((star) => (
-                <Star src={star} />
+              {genRatings(item.rating).map((star, index) => (
+                <Star src={star} key={index} />
               ))}
             </div>
+            <Add2CartBtn>Add to cart</Add2CartBtn>
           </Dflex>
         </ItemInfo>
         <ItemDetail>
@@ -83,6 +82,13 @@ const EditTools = styled.div`
   align-self: flex-end;
   padding-right: 1em;
   padding-bottom: 1em;
+`;
+const Add2CartBtn = styled.button`
+  color: white;
+  background-color: green;
+  margin: 5px;
+  border: none;
+  padding: 8px;
 `;
 // const mapStateToProps = (state) => ({});
 

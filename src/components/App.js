@@ -3,7 +3,7 @@ import { NotificationContainer } from "react-notifications";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { Fof } from "../pages/Fof";
-import { Products } from "../pages/Products";
+import Products from "../pages/Products";
 import { AddProduct } from "../pages/AddProduct";
 // js and css file import as needed for notifications
 import "../../node_modules/react-notifications/dist/react-notifications";
