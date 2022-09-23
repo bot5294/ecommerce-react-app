@@ -68,7 +68,6 @@ const ItemDetail = styled.div`
   display: flex;
 `;
 const Star = styled.img`
-  //   background-image: url("https://cdn-icons-png.flaticon.com/512/477/477406.png");
   width: 10px;
   height: 10px;
 `;

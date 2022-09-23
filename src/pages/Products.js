@@ -5,17 +5,18 @@ import { connect } from "react-redux";
 // import { bindActionCreators } from "redux";
 import { addProducts } from "../actions/products";
 import { API_URLS } from "../utils";
-let items = [];
 export function Products(props) {
+  console.log("props.products = ", props);
+  let items = props.data;
   useEffect(() => {
     fetch(API_URLS.products())
       .then((res) => res.json())
       .then((data) => {
-        items = data;
-        console.log("sendDataTo ", props);
+        // items = data;
+        console.log("useEffect data : ", data);
         props.sendDataToStore(data);
       });
-  }, [items]);
+  }, []);
   const handleSortByPrice = () => {
     items = items.sort();
     console.log(items);
@@ -42,7 +43,8 @@ const SortBtn = styled.div`
 
 function mapStateToProps(state) {
   console.log("inside products : ", state);
-  return { count: state.cart };
+  const { items } = state.products.state;
+  return { data: items };
 }
 
 const mapDispatchToProps = (dispatch) => ({
