@@ -1,13 +1,18 @@
-import React from "react";
+import { React, useState } from "react";
 import styled from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 import { add2Cart } from "../actions/cart";
 import { connect } from "react-redux";
 import { createNotification } from "../utils/Notification";
 import { useNavigate } from "react-router-dom";
-import { genRatings } from "../utils";
+import { genRatings, getById } from "../utils";
+import { deleteProduct, editProduct } from "../actions/products";
+import store from "../store";
 export const Item = (props) => {
   const navigate = useNavigate();
+  // const [items, setItems] = props.hook;
   let item = props.item;
+  const [editFlag, setEditFlag] = useState(false);
   const handleAdd2Cart = (item) => {
     props.addItem2Cart(item);
     createNotification("success", "Added To Cart");
@@ -17,6 +22,33 @@ export const Item = (props) => {
     navigate({
       pathname: `/productDetails/${id}`,
     });
+  };
+  const handleEditItem = (item) => {
+    setEditFlag(true);
+  };
+  const handleCancel = () => {
+    createNotification("warning", "product Update Cancelled");
+    setEditFlag(false);
+  };
+  const handleSave = (id) => {
+    let name = getById("_pname").value || item.name;
+    let desc = getById("_pdesc").value || item.desc;
+    let price = getById("_pprice").value || item.price;
+    let rating = getById("_prating").value || item.rating;
+    let data = {
+      id: id,
+      name,
+      desc,
+      price,
+      rating,
+    };
+    console.log("saved: ", data);
+    props.ediProd(data);
+    setEditFlag(false);
+    createNotification("success", "Item Updated Successfully");
+    props.setItems(store.getState().products.items);
+
+    // props.handleEditItem();
   };
   return (
     <>
@@ -28,29 +60,69 @@ export const Item = (props) => {
           >
             <img src={item.img} alt="item-img" width="110px" height="100px" />
           </div>
-          <Dflex>
-            <div>{item.name}</div>
-            <div>
-              <small>Rs.{item.price}</small>
-            </div>
-            <div>
-              {genRatings(item.rating).map((star, index) => (
-                <Star src={star} key={index} />
-              ))}
-            </div>
-            <Add2CartBtn onClick={() => handleAdd2Cart(item)}>
-              Add to cart
-            </Add2CartBtn>
-          </Dflex>
+          {editFlag ? (
+            <Dflex>
+              <div>
+                Product Name :
+                <input id="_pname" placeholder={item.name} />
+              </div>
+              <div>
+                Price :
+                <small>
+                  Rs.
+                  <input id="_pprice" placeholder={item.price} />
+                </small>
+              </div>
+              <div>
+                Ratings :
+                <input id="_prating" placeholder={item.rating} />
+              </div>
+            </Dflex>
+          ) : (
+            <Dflex>
+              <div>{item.name}</div>
+              <div>
+                <small>Rs.{item.price}</small>
+              </div>
+              <div>
+                {genRatings(item.rating).map((star, index) => (
+                  <Star src={star} key={index} />
+                ))}
+              </div>
+              <Add2CartBtn onClick={() => handleAdd2Cart(item)}>
+                Add to cart
+              </Add2CartBtn>
+            </Dflex>
+          )}
         </ItemInfo>
-        <ItemDetail>
-          <p>{item.desc}</p>
-          <EditTools>
-            <span style={{ cursor: "default" }}>✏️ </span>
-            <br />
-            <span style={{ cursor: "default" }}> 🗑️</span>
-          </EditTools>
-        </ItemDetail>
+        {editFlag ? (
+          <>
+            <EditSpecial>
+              <p>
+                <textarea
+                  id="_pdesc"
+                  rows={5}
+                  cols={50}
+                  placeholder={item.desc}
+                />
+              </p>
+              <CancelBtn onClick={handleCancel}>Cancel</CancelBtn>
+              <SaveBtn onClick={() => handleSave(item.id)}>Save</SaveBtn>
+            </EditSpecial>
+          </>
+        ) : (
+          <ItemDetail>
+            <p>{item.desc}</p>
+            <EditTools>
+              <EditBtn onClick={() => handleEditItem(item)}>✏️ </EditBtn>
+              <br />
+              <DeleteBtn onClick={() => props.handleRemoveItem(item)}>
+                {" "}
+                🗑️
+              </DeleteBtn>
+            </EditTools>
+          </ItemDetail>
+        )}
       </ItemCard>
     </>
   );
@@ -93,10 +165,29 @@ const Add2CartBtn = styled.button`
   border: none;
   padding: 8px;
 `;
+
+const DeleteBtn = styled.div`
+  cursor: default;
+  display: inline;
+`;
+const EditBtn = styled.div`
+  cursor: default;
+  display: inline;
+`;
+const CancelBtn = styled.button``;
+const SaveBtn = styled.button`
+  color: white;
+  background-color: green;
+  margin-left: 10px;
+`;
+const EditSpecial = styled.div`
+  padding: 18px;
+`;
 // const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
   addItem2Cart: (item) => dispatch(add2Cart(item)),
+  ediProd: (item) => dispatch(editProduct(item)),
 });
 
 export default connect(null, mapDispatchToProps)(Item);

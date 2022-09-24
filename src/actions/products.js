@@ -1,4 +1,4 @@
-import { ADD_PRODUCTS, DISPLAY_PRODUCTS } from "./actionTypes";
+import { ADD_PRODUCTS, EDIT_PRODUCT, REMOVE_PRODUCT } from "./actionTypes";
 import { SORT_BY_PRICE } from "./actionTypes";
 
 export function addProducts(items) {
@@ -13,10 +13,15 @@ export function sortProducts() {
     type: SORT_BY_PRICE,
   };
 }
-
-export function displayProducts(items) {
+export function deleteProduct(item) {
   return {
-    type: DISPLAY_PRODUCTS,
-    items,
+    type: REMOVE_PRODUCT,
+    item,
+  };
+}
+export function editProduct(item) {
+  return {
+    type: EDIT_PRODUCT,
+    item,
   };
 }

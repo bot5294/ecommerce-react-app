@@ -3,20 +3,18 @@ import Item from "../components/Item";
 import styled from "styled-components";
 import { connect } from "react-redux";
 // import { bindActionCreators } from "redux";
+import { createNotification } from "../utils/Notification";
+import { deleteProduct } from "../actions/products";
 import store from "../store";
-import {
-  addProducts,
-  sortProducts,
-  displayProducts,
-} from "../actions/products";
+import { addProducts, sortProducts } from "../actions/products";
 import { API_URLS } from "../utils";
 // import { v4 as uuidv4 } from "uuid";
 export function Products(props) {
-  // let backupItems = {};
-  const [items, setItems] = useState(
-    store.getState().products.items || props.data
-  );
-  console.log("items : ", items);
+  // let backupItems = {};store.getState().products.items
+
+  const [items, setItems] = useState(props.data);
+  const [shouldFetch, setShouldFetch] = useState(false);
+  console.log("items products.js : ", props.data);
   const [isSorted, setIsSorted] = useState(false);
   // products.state
   // if (items.length === 0) {
@@ -30,27 +28,42 @@ export function Products(props) {
         console.log("useEffect data= ", data);
         props.sendDataToStore(data);
       });
-  }, [items]);
+  }, [shouldFetch, isSorted]);
   const handleSortByPrice = () => {
     props.sortByPrice();
     setItems(store.getState().products.items);
     setIsSorted(true);
   };
   const handleUnsort = () => {
-    setIsSorted(false);
-    props.display(store.getState().products.items);
     setItems(store.getState().products.items);
+    setIsSorted(false);
+  };
+  const handleRemoveItem = (item) => {
+    console.log("hri props", props);
+    props.deleteItem(item);
+    createNotification("success", "Item Removed");
+    setItems(store.getState().products.items);
+  };
+  const handleEditItem = () => {
+    console.log("hei : ");
+    setItems(store.getState().products.items);
+    setShouldFetch(true);
   };
   return (
     <div>
-      <SortBtn onClick={handleSortByPrice}>
-        Sort By Price
-        {console.log(isSorted)}
-      </SortBtn>
+      <SortBtn onClick={handleSortByPrice}>Sort By Price</SortBtn>
       {isSorted === true && <Unsort onClick={handleUnsort}>X</Unsort>}
       {items.length > 0 &&
         items.map((item, index) => {
-          return <Item item={item} key={index} />;
+          return (
+            <Item
+              item={item}
+              handleRemoveItem={(item) => handleRemoveItem(item)}
+              handleEditItem={() => handleEditItem()}
+              setItems={setItems}
+              key={index}
+            />
+          );
         })}
       {/* {backupItems.length > 0 &&
         items.length === 0 &&
@@ -90,7 +103,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = (dispatch) => ({
   sendDataToStore: (data) => dispatch(addProducts(data)),
   sortByPrice: () => dispatch(sortProducts()),
-  display: (items) => dispatch(displayProducts(items)),
+
+  deleteItem: (item) => dispatch(deleteProduct(item)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Products);

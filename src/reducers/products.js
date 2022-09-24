@@ -1,7 +1,8 @@
 import {
   ADD_PRODUCTS,
-  DISPLAY_PRODUCTS,
+  EDIT_PRODUCT,
   SORT_BY_PRICE,
+  REMOVE_PRODUCT,
 } from "../actions/actionTypes";
 
 const productsInitialState = {
@@ -22,10 +23,23 @@ export default function products(state = productsInitialState, action) {
       return {
         items: [...items],
       };
-    case DISPLAY_PRODUCTS:
-      let nItems = [...action.items];
+    case EDIT_PRODUCT:
+      console.log("ep a.i = ", action.item);
+      action.item.img = state.items[action.item.id].img;
+      state.items[action.item.id] = action.item;
       return {
-        items: nItems,
+        items: [...state.items],
+      };
+    case REMOVE_PRODUCT:
+      let restItems = [];
+      state.items.map((i) => {
+        if (i.id !== action.item.id) {
+          console.log("i == a.i : " + i.id + " == " + action.item.id);
+          restItems.push(i);
+        }
+      });
+      return {
+        items: restItems,
       };
     default:
       return state;
