@@ -9,3 +9,4 @@ export const CLEAR_CART = "CLEAR_CART";
 export const REMOVE_PRODUCT = "REMOVE_PRODUCT";
 export const SORT_BY_PRICE = "SORT_BY_PRICE";
 export const ADD_PRODUCTS = "ADD_PRODUCTS";
+export const DISPLAY_PRODUCTS = "DISPLAY_PRODUCTS";

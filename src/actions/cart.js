@@ -9,7 +9,6 @@ export function add2Cart(item) {
 }
 
 export function removeCartItem(item) {
-  console.log("rfc : ", item);
   return {
     type: REMOVE_FROM_CART,
     item,

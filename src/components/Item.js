@@ -3,32 +3,29 @@ import styled from "styled-components";
 import { add2Cart } from "../actions/cart";
 import { connect } from "react-redux";
 import { createNotification } from "../utils/Notification";
+import { useNavigate } from "react-router-dom";
+import { genRatings } from "../utils";
 export const Item = (props) => {
-  const fstar = "https://cdn-icons-png.flaticon.com/512/477/477406.png";
-  const estar = "https://cdn-icons-png.flaticon.com/512/1828/1828961.png";
+  const navigate = useNavigate();
   let item = props.item;
-  const genRatings = (count) => {
-    let i = 1;
-    let arr = [];
-    while (i <= count) {
-      arr.push(fstar);
-      i++;
-    }
-    while (i <= 5) {
-      arr.push(estar);
-      i++;
-    }
-    return arr;
-  };
   const handleAdd2Cart = (item) => {
     props.addItem2Cart(item);
     createNotification("success", "Added To Cart");
+  };
+  const handleDisplayDetail = (id) => {
+    console.log("hDD id : ", id);
+    navigate({
+      pathname: `/productDetails/${id}`,
+    });
   };
   return (
     <>
       <ItemCard>
         <ItemInfo>
-          <div style={{ padding: "1em" }}>
+          <div
+            style={{ padding: "1em" }}
+            onClick={() => handleDisplayDetail(item.id)}
+          >
             <img src={item.img} alt="item-img" width="110px" height="100px" />
           </div>
           <Dflex>

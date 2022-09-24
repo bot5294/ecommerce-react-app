@@ -1,12 +1,23 @@
-import React from "react";
+import { React, useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { clearCart, removeCartItem } from "../actions/cart";
 import { createNotification } from "../utils/Notification";
+import { useNavigate } from "react-router-dom";
 export const Cart = (props) => {
+  const navigate = useNavigate();
   console.log("cart : ", props);
 
-  const { items } = props.data;
+  const { items, count } = props.data;
+  console.log("cccount : ", count);
+  // useEffect(() => {
+  //   if (count === 0 || count === undefined) {
+  //     alert("Cart is Empty, Redirecting to home");
+  //     navigate({
+  //       pathname: `/`,
+  //     });
+  //   }
+  // }, [count]);
   const getTotal = () => {
     let total = 0;
     items.map((item) => {
@@ -61,7 +72,10 @@ export const Cart = (props) => {
         </table>
         <Total>Grand Total = Rs. {getTotal()}</Total>
         <CartOperations>
-          <ClearBtn onClick={handleClearCart}>Clear Cart</ClearBtn>
+          {count > 0 && (
+            <ClearBtn onClick={handleClearCart}>Clear Cart</ClearBtn>
+          )}
+
           <OrderBtn disabled>Place Order</OrderBtn>
         </CartOperations>
       </CartBox>

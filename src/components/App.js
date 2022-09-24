@@ -9,6 +9,7 @@ import Cart from "../pages/Cart";
 // js and css file import as needed for notifications
 import "../../node_modules/react-notifications/dist/react-notifications";
 import "../../node_modules/react-notifications/dist/react-notifications.css";
+import ProductDetails from "../pages/ProductDetails";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/addProduct" element={<AddProduct />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/productDetails/:id" element={<ProductDetails />} />
           <Route path="*" element={<Fof />} />
         </Routes>
       </Router>

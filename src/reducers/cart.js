@@ -12,12 +12,15 @@ const cartInitialState = {
 export default function cart(state = cartInitialState, action) {
   switch (action.type) {
     case ADD_2_CART:
-      if (state.items.includes(action.item)) {
-        action.item.icount++;
-        return {
-          items: [...state.items],
-          count: state.count + 1,
-        };
+      console.log("a2c s.i", state);
+      for (let i = 0; i < state.items.length; i++) {
+        if (state.items[i].id === action.item.id) {
+          state.items[i].icount++;
+          return {
+            items: [...state.items],
+            count: state.count + 1,
+          };
+        }
       }
       action.item.icount = 1;
       return {
@@ -32,15 +35,18 @@ export default function cart(state = cartInitialState, action) {
           nItems.push(i);
         }
       });
-      console.log("nItems : ", nItems);
       return {
         items: nItems,
-        count: state.count > 0 ? state.count - 1 : 0,
+        count: state.count - action.item.icount,
       };
     case CLEAR_CART:
-      localStorage.clear();
-      window.location.reload();
-      return state;
+      // localStorage.clear();
+      localStorage.removeItem("persist:root");
+      // window.location.reload();
+      return {
+        items: [],
+        count: 0,
+      };
     default:
       return state;
   }
