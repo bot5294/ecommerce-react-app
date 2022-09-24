@@ -25,13 +25,17 @@ export default function cart(state = cartInitialState, action) {
         count: state.count + 1,
       };
     case REMOVE_FROM_CART:
-      let nState = state.items;
-      nState.filter((item) => (item === action.item ? "" : item));
+      let nItems = [];
+      state.items.map((i) => {
+        if (i !== action.item) {
+          console.log("i == a.i : " + i.name + " == " + action.item.name);
+          nItems.push(i);
+        }
+      });
+      console.log("nItems : ", nItems);
       return {
-        state: {
-          items: nState,
-          count: state.count > 0 ? state.count - 1 : 0,
-        },
+        items: nItems,
+        count: state.count > 0 ? state.count - 1 : 0,
       };
     case CLEAR_CART:
       localStorage.clear();

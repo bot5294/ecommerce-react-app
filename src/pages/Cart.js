@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { clearCart } from "../actions/cart";
+import { clearCart, removeCartItem } from "../actions/cart";
+import { createNotification } from "../utils/Notification";
 export const Cart = (props) => {
   console.log("cart : ", props);
 
@@ -17,6 +18,12 @@ export const Cart = (props) => {
     console.log("i am clickled");
     alert("cart cleared");
     props.clearCart();
+  };
+  const handleRemoveItem = (item) => {
+    console.log("hri props", props);
+    props.removeItem(item);
+    createNotification("success", "Item Removed");
+    console.log("inside handleRemoveCartItems");
   };
   return (
     <>
@@ -44,7 +51,9 @@ export const Cart = (props) => {
                   <td>{item.name}</td>
                   <td>{item.price}</td>
                   <td>{item.icount}</td>
-                  <RemoveBtn>X</RemoveBtn>
+                  <RemoveBtn onClick={() => handleRemoveItem(item)}>
+                    X
+                  </RemoveBtn>
                 </tr>
               );
             })}
@@ -69,11 +78,12 @@ const CartBox = styled.div`
   width: 40em;
   padding: 1em;
 `;
-const RemoveBtn = styled.div`
+const RemoveBtn = styled.td`
   text-align: center;
   padding: 8px;
   color: red;
   font-weight: bold;
+  cursor: default;
 `;
 const CartOperations = styled.div`
   display: flex;
@@ -100,6 +110,7 @@ const mapStateToProps = (state) => ({ data: state.cart });
 
 const mapDispatchToProps = (dispatch) => ({
   clearCart: () => dispatch(clearCart()),
+  removeItem: (item) => dispatch(removeCartItem(item)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
