@@ -7,7 +7,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(222, 222, 222);
 }
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
 
+th,
+td {
+  text-align: center;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

@@ -1,7 +1,7 @@
 import {
   ADD_2_CART,
   REMOVE_FROM_CART,
-  DISPLAY_CART_COUNT,
+  CLEAR_CART,
 } from "../actions/actionTypes";
 
 const cartInitialState = {
@@ -12,6 +12,14 @@ const cartInitialState = {
 export default function cart(state = cartInitialState, action) {
   switch (action.type) {
     case ADD_2_CART:
+      if (state.items.includes(action.item)) {
+        action.item.icount++;
+        return {
+          items: [...state.items],
+          count: state.count + 1,
+        };
+      }
+      action.item.icount = 1;
       return {
         items: [...state.items, action.item],
         count: state.count + 1,
@@ -25,7 +33,9 @@ export default function cart(state = cartInitialState, action) {
           count: state.count > 0 ? state.count - 1 : 0,
         },
       };
-    case DISPLAY_CART_COUNT:
+    case CLEAR_CART:
+      localStorage.clear();
+      window.location.reload();
       return state;
     default:
       return state;

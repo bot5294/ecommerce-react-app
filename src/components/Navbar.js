@@ -25,14 +25,16 @@ export function Navbar(props) {
           />
         </StyledLink>
       </NavOption>
-      <Cart>
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/679/679701.png"
-          width="25px"
-          alt="cart-img"
-        />
-        <CartCounter>{props.count}</CartCounter>
-      </Cart>
+      <Link to="/cart">
+        <Cart>
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/679/679701.png"
+            width="25px"
+            alt="cart-img"
+          />
+          <CartCounter>{props.count}</CartCounter>
+        </Cart>
+      </Link>
       <Userlogo>
         <UserName>John Doe</UserName>
         <UserDp>

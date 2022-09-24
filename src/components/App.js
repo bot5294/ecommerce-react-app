@@ -5,6 +5,7 @@ import { Home } from "../pages/Home";
 import { Fof } from "../pages/Fof";
 import Products from "../pages/Products";
 import { AddProduct } from "../pages/AddProduct";
+import Cart from "../pages/Cart";
 // js and css file import as needed for notifications
 import "../../node_modules/react-notifications/dist/react-notifications";
 import "../../node_modules/react-notifications/dist/react-notifications.css";
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/addProduct" element={<AddProduct />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<Fof />} />
         </Routes>
       </Router>
