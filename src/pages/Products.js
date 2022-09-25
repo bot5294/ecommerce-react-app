@@ -2,24 +2,19 @@ import { React, useEffect, useState } from "react";
 import Item from "../components/Item";
 import styled from "styled-components";
 import { connect } from "react-redux";
-// import { bindActionCreators } from "redux";
+
 import { createNotification } from "../utils/Notification";
 import { deleteProduct } from "../actions/products";
 import store from "../store";
 import { addProducts, sortProducts } from "../actions/products";
 import { API_URLS } from "../utils";
-// import { v4 as uuidv4 } from "uuid";
-export function Products(props) {
-  // let backupItems = {};store.getState().products.items
 
+export function Products(props) {
   const [items, setItems] = useState(props.data);
   const [shouldFetch, setShouldFetch] = useState(false);
   console.log("items products.js : ", props.data);
   const [isSorted, setIsSorted] = useState(false);
-  // products.state
-  // if (items.length === 0) {
-  //   backupItems = props.data;
-  // }
+
   useEffect(() => {
     console.log("useEffect called");
     fetch(API_URLS.products())
@@ -65,11 +60,6 @@ export function Products(props) {
             />
           );
         })}
-      {/* {backupItems.length > 0 &&
-        items.length === 0 &&
-        backupItems.map((item, index) => {
-          return <Item item={item} key={index} />;
-        })} */}
     </div>
   );
 }

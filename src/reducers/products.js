@@ -3,6 +3,7 @@ import {
   EDIT_PRODUCT,
   SORT_BY_PRICE,
   REMOVE_PRODUCT,
+  ADD_PRODUCT,
 } from "../actions/actionTypes";
 
 const productsInitialState = {
@@ -16,6 +17,11 @@ export default function products(state = productsInitialState, action) {
       return {
         items: [...action.items],
       };
+    case ADD_PRODUCT: {
+      return {
+        items: [...state.items, action.item],
+      };
+    }
     case SORT_BY_PRICE:
       let items = { state: state };
       items = state.items;

@@ -1,5 +1,10 @@
-import { ADD_PRODUCTS, EDIT_PRODUCT, REMOVE_PRODUCT } from "./actionTypes";
-import { SORT_BY_PRICE } from "./actionTypes";
+import {
+  ADD_PRODUCTS,
+  EDIT_PRODUCT,
+  REMOVE_PRODUCT,
+  ADD_PRODUCT,
+  SORT_BY_PRICE,
+} from "./actionTypes";
 
 export function addProducts(items) {
   return {
@@ -7,7 +12,12 @@ export function addProducts(items) {
     items,
   };
 }
-
+export function addProduct(item) {
+  return {
+    type: ADD_PRODUCT,
+    item,
+  };
+}
 export function sortProducts() {
   return {
     type: SORT_BY_PRICE,

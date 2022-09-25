@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { Fof } from "../pages/Fof";
 import Products from "../pages/Products";
-import { AddProduct } from "../pages/AddProduct";
+import AddProduct from "../pages/Add_Product";
 import Cart from "../pages/Cart";
 // js and css file import as needed for notifications
 import "../../node_modules/react-notifications/dist/react-notifications";
