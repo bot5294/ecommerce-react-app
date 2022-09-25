@@ -11,6 +11,7 @@ export function AddProduct(props) {
     let desc = getById("_desc").value;
     let price = getById("_price").value;
     let rating = getById("_rating").value;
+    let img = getById("_purl").value;
     console.log(name, desc, price, rating);
     try {
       const data = {
@@ -18,7 +19,7 @@ export function AddProduct(props) {
         desc,
         price,
         rating,
-        img: "",
+        img,
       };
       console.log("data : ", data);
       props.addItem(data);
@@ -45,6 +46,12 @@ export function AddProduct(props) {
             <br />
           </label>
           <label>
+            Image Url :
+            <br />
+            <input id="_purl" />
+            <br />
+          </label>
+          <label>
             Price
             <br />
             <input id="_price" />
@@ -53,7 +60,13 @@ export function AddProduct(props) {
           <label>
             Rating
             <br />
-            <input id="_rating" />
+            <select id="_rating">
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+            </select>
             <br />
           </label>
           <Button onClick={(e) => handleFormSubmit(e)}>Add</Button>

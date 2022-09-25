@@ -133,8 +133,7 @@ const ItemCard = styled.div`
   display: flex;
   justify-content: space-between;
   width: 90%;
-  margin: 0 auto;
-  margin-top: 1em;
+  margin: 1em auto;
 `;
 const ItemInfo = styled.div`
   display: flex;
