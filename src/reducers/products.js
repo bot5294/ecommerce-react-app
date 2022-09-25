@@ -25,12 +25,13 @@ export default function products(state = productsInitialState, action) {
     case SORT_BY_PRICE:
       let items = { state: state };
       items = state.items;
+      // sort the items in ascending order on basis of price
       items = items.sort((a, b) => a.price - b.price);
       return {
         items: [...items],
       };
     case EDIT_PRODUCT:
-      console.log("ep a.i = ", action.item);
+      // update the specific product by using id from action
       action.item.img = state.items[action.item.id].img;
       state.items[action.item.id] = action.item;
       return {
@@ -40,7 +41,7 @@ export default function products(state = productsInitialState, action) {
       let restItems = [];
       state.items.map((i) => {
         if (i.id !== action.item.id) {
-          console.log("i == a.i : " + i.id + " == " + action.item.id);
+          // if id is not that which we want to remove then add it to new array
           restItems.push(i);
         }
       });

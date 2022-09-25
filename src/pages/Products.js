@@ -2,7 +2,6 @@ import { React, useEffect, useState } from "react";
 import Item from "../components/Item";
 import styled from "styled-components";
 import { connect } from "react-redux";
-
 import { createNotification } from "../utils/Notification";
 import { deleteProduct } from "../actions/products";
 import store from "../store";
@@ -10,13 +9,13 @@ import { addProducts, sortProducts } from "../actions/products";
 import { API_URLS } from "../utils";
 
 export function Products(props) {
+  // useState hooks
   const [items, setItems] = useState(props.data);
   const [shouldFetch, setShouldFetch] = useState(false);
-  console.log("items products.js : ", props.data);
   const [isSorted, setIsSorted] = useState(false);
 
   useEffect(() => {
-    console.log("useEffect called");
+    // fetch products from api
     fetch(API_URLS.products())
       .then((res) => res.json())
       .then((data) => {
@@ -30,17 +29,20 @@ export function Products(props) {
     setIsSorted(true);
   };
   const handleUnsort = () => {
+    // unsort or re-fetch the original items
     setItems(store.getState().products.items);
     setIsSorted(false);
   };
   const handleRemoveItem = (item) => {
-    console.log("hri props", props);
     props.deleteItem(item);
     createNotification("success", "Item Removed");
     setItems(store.getState().products.items);
   };
   const handleEditItem = () => {
-    console.log("hei : ");
+    // this is a parent function all the
+    // required actions like editing state is done
+    // by a child function inside Item component, once child function
+    // does it's work it calls this parent function for re-render
     setItems(store.getState().products.items);
     setShouldFetch(true);
   };

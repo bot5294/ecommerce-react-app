@@ -1,7 +1,6 @@
 import { NotificationManager } from "react-notifications";
 
 export const createNotification = (type, msg) => {
-  // return (type, msg) => {
   console.log("inside notyfs : ", type, msg);
   switch (type) {
     case "info":
@@ -20,5 +19,4 @@ export const createNotification = (type, msg) => {
       break;
     default:
   }
-  // };
 };

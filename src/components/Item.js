@@ -1,29 +1,31 @@
 import { React, useState } from "react";
 import styled from "styled-components";
-import { v4 as uuidv4 } from "uuid";
 import { add2Cart } from "../actions/cart";
 import { connect } from "react-redux";
 import { createNotification } from "../utils/Notification";
 import { useNavigate } from "react-router-dom";
 import { genRatings, getById } from "../utils";
-import { deleteProduct, editProduct } from "../actions/products";
+import { editProduct } from "../actions/products";
 import store from "../store";
 export const Item = (props) => {
   const navigate = useNavigate();
-  // const [items, setItems] = props.hook;
   let item = props.item;
+  // ediFlag is used for conditional rendering if user press pensil(edit) btn the
+  // display input fields and when eidtFlag is false then
+  // show data
   const [editFlag, setEditFlag] = useState(false);
   const handleAdd2Cart = (item) => {
     props.addItem2Cart(item);
     createNotification("success", "Added To Cart");
   };
   const handleDisplayDetail = (id) => {
-    console.log("hDD id : ", id);
+    // onClick of product image redirect to respective product-details page
     navigate({
       pathname: `/productDetails/${id}`,
     });
   };
-  const handleEditItem = (item) => {
+  const handleEditItem = () => {
+    // this works as toggle for edit features
     setEditFlag(true);
   };
   const handleCancel = () => {
@@ -31,6 +33,9 @@ export const Item = (props) => {
     setEditFlag(false);
   };
   const handleSave = (id) => {
+    // get the values
+    // getById is a shorthand custom function for document.getElementById
+    // defined in utils.js
     let name = getById("_pname").value || item.name;
     let desc = getById("_pdesc").value || item.desc;
     let price = getById("_pprice").value || item.price;
@@ -42,13 +47,10 @@ export const Item = (props) => {
       price,
       rating,
     };
-    console.log("saved: ", data);
     props.ediProd(data);
     setEditFlag(false);
     createNotification("success", "Item Updated Successfully");
     props.setItems(store.getState().products.items);
-
-    // props.handleEditItem();
   };
   return (
     <>
@@ -114,7 +116,7 @@ export const Item = (props) => {
           <ItemDetail>
             <p>{item.desc}</p>
             <EditTools>
-              <EditBtn onClick={() => handleEditItem(item)}>✏️ </EditBtn>
+              <EditBtn onClick={() => handleEditItem()}>✏️ </EditBtn>
               <br />
               <DeleteBtn onClick={() => props.handleRemoveItem(item)}>
                 {" "}
@@ -127,7 +129,7 @@ export const Item = (props) => {
     </>
   );
 };
-
+// styling
 const ItemCard = styled.div`
   background-color: whitesmoke;
   display: flex;

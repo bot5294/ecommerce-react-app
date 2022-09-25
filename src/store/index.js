@@ -35,11 +35,3 @@ export default configureStore({
       immutableCheck: false,
     }),
 });
-// let store;
-// function configureStore(state = {}) {
-//   store = createStore(reducer, state);
-
-//   return store;
-// }
-
-// export default configureStore();

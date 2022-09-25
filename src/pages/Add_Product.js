@@ -7,12 +7,14 @@ import { addProduct } from "../actions/products";
 export function AddProduct(props) {
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    // fetch values:
+    // getById is a shorthand Function for document.getElementById
+    // defined in utils.js
     let name = getById("_name").value;
     let desc = getById("_desc").value;
     let price = getById("_price").value;
     let rating = getById("_rating").value;
     let img = getById("_purl").value;
-    console.log(name, desc, price, rating);
     try {
       const data = {
         name,
@@ -21,10 +23,11 @@ export function AddProduct(props) {
         rating,
         img,
       };
-      console.log("data : ", data);
+      // add item to the store
       props.addItem(data);
       createNotification("success", "Item Added!");
     } catch (error) {
+      createNotification("error", "Error in adding then Item");
       console.log(error);
     }
   };
@@ -94,11 +97,6 @@ const Button = styled.button`
   position: absolute;
   margin-left: 18em;
 `;
-
-// function mapStateToProps(state) {
-//   const { items } = state.products || {};
-//   return { data: items };
-// }
 
 const mapDispatchToProps = (dispatch) => ({
   addItem: (item) => dispatch(addProduct(item)),

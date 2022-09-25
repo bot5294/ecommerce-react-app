@@ -32,6 +32,7 @@ export function Navbar(props) {
             width="25px"
             alt="cart-img"
           />
+          {/* fetching count from redux store and displaying here */}
           <CartCounter>{props.count}</CartCounter>
         </Cart>
       </Link>

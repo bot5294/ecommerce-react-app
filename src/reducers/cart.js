@@ -12,7 +12,8 @@ const cartInitialState = {
 export default function cart(state = cartInitialState, action) {
   switch (action.type) {
     case ADD_2_CART:
-      console.log("a2c s.i", state);
+      // add individual count "icount" as 1 for 1st time next
+      // time increment the icount as well as count
       for (let i = 0; i < state.items.length; i++) {
         if (state.items[i].id === action.item.id) {
           state.items[i].icount++;
@@ -31,7 +32,7 @@ export default function cart(state = cartInitialState, action) {
       let nItems = [];
       state.items.map((i) => {
         if (i !== action.item) {
-          console.log("i == a.i : " + i.name + " == " + action.item.name);
+          // if item is not that we wanted to delete then add it to new array
           nItems.push(i);
         }
       });
@@ -40,9 +41,9 @@ export default function cart(state = cartInitialState, action) {
         count: state.count - action.item.icount,
       };
     case CLEAR_CART:
-      // localStorage.clear();
+      //remove localStorage data
       localStorage.removeItem("persist:root");
-      // window.location.reload();
+      // return the initial state
       return {
         items: [],
         count: 0,

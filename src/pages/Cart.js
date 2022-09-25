@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { clearCart, removeCartItem } from "../actions/cart";
@@ -6,19 +6,9 @@ import { createNotification } from "../utils/Notification";
 import { useNavigate } from "react-router-dom";
 export const Cart = (props) => {
   const navigate = useNavigate();
-  console.log("cart : ", props);
-
   const { items, count } = props.data;
-  console.log("cccount : ", count);
-  // useEffect(() => {
-  //   if (count === 0 || count === undefined) {
-  //     alert("Cart is Empty, Redirecting to home");
-  //     navigate({
-  //       pathname: `/`,
-  //     });
-  //   }
-  // }, [count]);
   const getTotal = () => {
+    // loop over items and calculate total
     let total = 0;
     items.map((item) => {
       total += item.price * item.icount;
@@ -26,15 +16,12 @@ export const Cart = (props) => {
     return total;
   };
   const handleClearCart = () => {
-    console.log("i am clickled");
     alert("cart cleared");
     props.clearCart();
   };
   const handleRemoveItem = (item) => {
-    console.log("hri props", props);
     props.removeItem(item);
     createNotification("success", "Item Removed");
-    console.log("inside handleRemoveCartItems");
   };
   return (
     <>
@@ -82,6 +69,7 @@ export const Cart = (props) => {
     </>
   );
 };
+// css
 const CartImg = styled.div`
   text-align: center;
   margin: 1em;

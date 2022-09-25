@@ -6,11 +6,13 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { genRatings } from "../utils";
 export const ProductDetails = (props) => {
+  // extract product id from search params
   const id = useParams();
   const items = props.data;
   let product = getProduct(items, id);
   console.log("id === ", id);
   function getProduct(items, id) {
+    // using id and items array extract the specific id product
     let product;
     for (let i = 0; i < items.length; i++) {
       if (items[i].id === id.id) {
